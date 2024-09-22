@@ -26,6 +26,10 @@ class Student{
     public:string getName(){
         return this->name;
     }
+
+    void setName(string name){
+         this->name = name;
+    }
     public:int getStudentNumber(){
         return this->student_number;
     }
