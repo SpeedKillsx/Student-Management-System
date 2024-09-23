@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
-#include "classes/StudentManager.cpp" // Assuming this contains the StudentManager class
+#include "classes/StudentManager.cpp"
+#include <sqlite3.h>
+
 using namespace std;
 
 struct Menu {
@@ -49,11 +51,8 @@ struct Menu {
                     int student_number;
                     cout << "Enter the student number to update: ";
                     cin >> student_number;
-                    Student student (3, "Dani", "Olmo", "tizi", "08/08/2000");
-                    
-                        sm.updateStudent(student);
-                        
-                  
+                    Student student(student_number, "NewName", "NewSurname", "NewPlace", "01/01/2000"); // Update with new data
+                    sm.updateStudent(student);
                     break;
                 }
                 case 3: {
@@ -61,16 +60,13 @@ struct Menu {
                     int student_number;
                     cout << "Enter the student number to remove: ";
                     cin >> student_number;
-
-                    Student student (3, "Dani", "Olmo", "tizi", "08/08/2000");
-                    
-                        sm.removeStudent(student);
-                    
+                    Student student(student_number, "DummyName", "DummySurname", "DummyPlace", "01/01/2000"); // Dummy data for removal
+                    sm.removeStudent(student);
                     break;
                 }
                 case 4: {
-                    // Show all students
-                    sm.display_students();
+                    // Show all students from the database
+                    sm.showStudentsFromDatabase(); // Call to the new method
                     break;
                 }
                 case -1:
@@ -85,24 +81,21 @@ struct Menu {
 };
 
 int main() {
-    // Create some sample students
-    Student s1(1, "lab", "ama", "alger", "08/08/2000");
-    Student s2(2, "bip", "bip", "oran", "08/08/2000");
-    Student s3(3, "Dani", "Olmo", "tizi", "08/08/2000");
-
     // Initialize the StudentManager
     StudentManager sm;
-    sm.addStudent(s1);
-    sm.addStudent(s2);
-    sm.addStudent(s3);
+    int rc = sm.ConnectDatabase("Student_gestion.db");
+    printf("rc = %d\n", rc);
 
-    // Display initial students
-    sm.display_students();
+    // Check if the database is connected and display students
+    if (rc == SQLITE_OK) {
+        // Display initial students from the database
+        sm.showStudentsFromDatabase();
 
-    // Initialize the Menu
-    Menu menu;
-    int choice = 0;
-    menu.show(choice, sm);
+        // Initialize the Menu
+        Menu menu;
+        int choice = 0;
+        menu.show(choice, sm);
+    }
 
     return 0;
 }
