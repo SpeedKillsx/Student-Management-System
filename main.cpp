@@ -26,23 +26,8 @@ struct Menu {
 
             switch (choice) {
                 case 1: {
-                    // Add a new student
-                    int student_number;
-                    string name, surname, place_birth, date_birth;
-
-                    cout << "Introduce the student number: ";
-                    cin >> student_number;
-                    cout << "Introduce the student name: ";
-                    cin >> name;
-                    cout << "Introduce the student surname: ";
-                    cin >> surname;
-                    cout << "Introduce the student place of birth: ";
-                    cin >> place_birth;
-                    cout << "Introduce the student date of birth (dd/mm/yyyy): ";
-                    cin >> date_birth;
-
-                    Student new_student(student_number, name, surname, place_birth, date_birth);
-                    sm.addStudent(new_student);
+                    
+                    sm.addStudent();
                     cout << "Student added successfully!" << endl;
                     break;
                 }
@@ -51,8 +36,7 @@ struct Menu {
                     int student_number;
                     cout << "Enter the student number to update: ";
                     cin >> student_number;
-                    Student student(student_number, "NewName", "NewSurname", "NewPlace", "01/01/2000"); // Update with new data
-                    sm.updateStudent(student);
+                    sm.updateStudent(student_number);
                     break;
                 }
                 case 3: {
@@ -86,10 +70,8 @@ int main() {
     int rc = sm.ConnectDatabase("Student_gestion.db");
     printf("rc = %d\n", rc);
 
-    // Check if the database is connected and display students
     if (rc == SQLITE_OK) {
-        // Display initial students from the database
-        sm.showStudentsFromDatabase();
+        sm.RefreshVector();
 
         // Initialize the Menu
         Menu menu;
