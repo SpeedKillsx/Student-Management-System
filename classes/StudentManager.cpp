@@ -24,6 +24,18 @@ class StudentManager{
         
     }
     public : void addStudent(Student s){
+        cout<<"Enter the informations of the student : "<<endl; 
+        cout<<"Enter the name of the student : "<<endl;
+        string name, surname, date, place;
+        cin>> name;
+        cout<<"Enter the surname of the student : "<<endl;
+        cin>> surname;
+        cout<<"Enter the birth date of the student : "<<endl;
+        cin>> date;
+        cout<<"Enter the birth place of the student : "<<endl;
+        cin>>place;
+        const char *sql = "INSERT into STUDENT values (?,?,?,?,?)";
+
         this->Student_vector.push_back( s);
     }
 
@@ -39,10 +51,19 @@ class StudentManager{
     }
 
     void updateStudent(Student& s){
-    
-        cout<<s.getName()<<endl;
-        s.setName("alli");
-        cout<<s.getName()<<endl;
+        int student_number;
+       string name, surname, place_birth, date_birth;
+
+        cout << "Introduce the student number: ";
+        cin >> student_number;
+        cout << "Introduce the student name: ";
+        cin >> name;
+        cout << "Introduce the student surname: ";
+        cin >> surname;
+        cout << "Introduce the student place of birth: ";
+        cin >> place_birth;
+        cout << "Introduce the student date of birth (dd/mm/yyyy): ";
+        cin >> date_birth;
 
     }
     int ConnectDatabase(const char * file){
